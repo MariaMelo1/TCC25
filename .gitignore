@@ -1,0 +1,25 @@
+# Backend
+backend/target/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+
+# Flutter
+dish_of_the_world/.dart_tool/
+dish_of_the_world/.flutter-plugins
+dish_of_the_world/.flutter-plugins-dependencies
+dish_of_the_world/.packages
+dish_of_the_world/.pub-cache/
+dish_of_the_world/.pub/
+dish_of_the_world/build/
+dish_of_the_world/ios/Flutter/Generated.xcconfig
+dish_of_the_world/ios/Runner/GeneratedPluginRegistrant.*
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db

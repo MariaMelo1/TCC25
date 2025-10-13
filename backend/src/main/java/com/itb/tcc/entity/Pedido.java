@@ -33,6 +33,9 @@ public class Pedido extends EntityBase {
     @Column(name = "retirada")
     private Boolean retirada = false;
     
+    @Column(name = "dataRetirada")
+    private LocalDateTime dataRetirada;
+    
     @ManyToOne
     @JoinColumn(name = "usuarioId", insertable = false, updatable = false)
     private Usuario usuario;
@@ -111,5 +114,13 @@ public class Pedido extends EntityBase {
     
     public void setRetirada(Boolean retirada) {
         this.retirada = retirada;
+    }
+    
+    public LocalDateTime getDataRetirada() {
+        return dataRetirada;
+    }
+    
+    public void setDataRetirada(LocalDateTime dataRetirada) {
+        this.dataRetirada = dataRetirada;
     }
 }

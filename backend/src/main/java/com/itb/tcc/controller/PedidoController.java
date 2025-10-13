@@ -49,8 +49,33 @@ public class PedidoController {
     }
     
     @PostMapping("/atualizar")
-    public String atualizarEncomenda(@RequestBody Pedido pedido) {
+    public String atualizarEncomenda(@RequestBody Map<String, Object> dados) {
         try {
+            Pedido pedido = repository.findById(Long.valueOf(dados.get("id").toString())).orElse(null);
+            if (pedido == null) {
+                return "{\"success\": false, \"message\": \"Encomenda não encontrada\"}";
+            }
+            
+            if (dados.get("retirada") != null) {
+                pedido.setRetirada(Boolean.valueOf(dados.get("retirada").toString()));
+            }
+            
+            if (dados.get("dataRetirada") != null && !dados.get("dataRetirada").toString().isEmpty()) {
+                pedido.setDataRetirada(LocalDateTime.parse(dados.get("dataRetirada").toString()));
+            }
+            
+            if (dados.get("quantidade") != null) {
+                pedido.setQuantidade(Integer.valueOf(dados.get("quantidade").toString()));
+            }
+            
+            if (dados.get("status") != null) {
+                pedido.setStatus(Byte.valueOf(dados.get("status").toString()));
+            }
+            
+            if (dados.get("dataEncomenda") != null) {
+                pedido.setDataEncomenda(LocalDateTime.parse(dados.get("dataEncomenda").toString()));
+            }
+            
             repository.save(pedido);
             return "{\"success\": true, \"message\": \"Encomenda atualizada com sucesso\"}";
         } catch (Exception e) {

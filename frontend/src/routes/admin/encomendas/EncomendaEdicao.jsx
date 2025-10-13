@@ -116,15 +116,21 @@ export default () => {
               </div>
               <div className="campo-info">
                 <label>Data:</label>
-                <input 
-                  type="datetime-local" 
-                  value={encomendas[0]?.dataEncomenda?.slice(0, 16)}
-                  onChange={(e) => {
-                    const novasEncomendas = encomendas.map(enc => ({...enc, dataEncomenda: e.target.value}));
-                    setEncomendas(novasEncomendas);
-                  }}
-                  style={{padding: '5px'}}
-                />
+                {encomendas[0]?.retirada ? (
+                  <span>{new Date(encomendas[0]?.dataEncomenda).toLocaleDateString('pt-BR', {
+                    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                  })}</span>
+                ) : (
+                  <input 
+                    type="datetime-local" 
+                    value={encomendas[0]?.dataEncomenda?.slice(0, 16)}
+                    onChange={(e) => {
+                      const novasEncomendas = encomendas.map(enc => ({...enc, dataEncomenda: e.target.value}));
+                      setEncomendas(novasEncomendas);
+                    }}
+                    style={{padding: '5px'}}
+                  />
+                )}
               </div>
               <div className="campo-info">
                 <label>Valor Total:</label>
@@ -132,18 +138,23 @@ export default () => {
               </div>
               <div className="campo-info">
                 <label>Status:</label>
-                <select 
-                  value={encomendas[0]?.status || 1}
-                  onChange={(e) => {
-                    const novasEncomendas = encomendas.map(enc => ({...enc, status: parseInt(e.target.value)}));
-                    setEncomendas(novasEncomendas);
-                  }}
-                  style={{padding: '5px'}}
-                >
-                  <option value={1}>ATIVO</option>
-                  <option value={0}>INATIVO</option>
-                </select>
+                {encomendas[0]?.retirada ? (
+                  <span>{encomendas[0]?.status === 1 ? 'ATIVO' : 'INATIVO'}</span>
+                ) : (
+                  <select 
+                    value={encomendas[0]?.status || 1}
+                    onChange={(e) => {
+                      const novasEncomendas = encomendas.map(enc => ({...enc, status: parseInt(e.target.value)}));
+                      setEncomendas(novasEncomendas);
+                    }}
+                    style={{padding: '5px'}}
+                  >
+                    <option value={1}>ATIVO</option>
+                    <option value={0}>INATIVO</option>
+                  </select>
+                )}
               </div>
+
             </div>
             
             <h3>Produtos da Encomenda</h3>
@@ -160,12 +171,16 @@ export default () => {
                   <tr key={encomenda.id}>
                     <td>{encomenda.produto?.nome}</td>
                     <td>
-                      <input 
-                        type="number" 
-                        value={encomenda.quantidade}
-                        onChange={(e) => atualizarEncomenda(index, 'quantidade', parseInt(e.target.value))}
-                        style={{width: '80px', padding: '5px'}}
-                      />
+                      {encomenda.retirada ? (
+                        <span>{encomenda.quantidade}</span>
+                      ) : (
+                        <input 
+                          type="number" 
+                          value={encomenda.quantidade}
+                          onChange={(e) => atualizarEncomenda(index, 'quantidade', parseInt(e.target.value))}
+                          style={{width: '80px', padding: '5px'}}
+                        />
+                      )}
                     </td>
                     <td>
                       <input 
@@ -183,11 +198,13 @@ export default () => {
             
             <div className="formulario-acoes">
               <button type="button" className="btn-cancelar" onClick={() => navigate(-1)}>
-                Cancelar
+                Voltar
               </button>
-              <button type="button" className="btn-salvar" onClick={salvarEncomendas}>
-                Atualizar
-              </button>
+              {!encomendas.every(enc => enc.retirada) && (
+                <button type="button" className="btn-salvar" onClick={salvarEncomendas}>
+                  Atualizar
+                </button>
+              )}
               <button 
                 type="button" 
                 className="btn-finalizar" 

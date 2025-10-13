@@ -52,6 +52,7 @@ export default () => {
         usuario: encomenda.usuario,
         dataEncomenda: encomenda.dataEncomenda,
         status: encomenda.status,
+        retirada: encomenda.retirada,
         itens: [],
         valorTotal: 0
       };
@@ -60,9 +61,12 @@ export default () => {
       id: encomenda.id,
       produto: encomenda.produto,
       quantidade: encomenda.quantidade,
-      preco: encomenda.preco
+      preco: encomenda.preco,
+      retirada: encomenda.retirada
     });
     acc[chave].valorTotal += (encomenda.preco * encomenda.quantidade) || 0;
+    // Atualizar retirada se todos os itens foram retirados
+    acc[chave].retirada = acc[chave].itens.every(item => item.retirada);
     return acc;
   }, {});
 
@@ -169,8 +173,8 @@ export default () => {
                         </span>
                       </td>
                       <td className="retirada-cell">
-                        <span className={`retirada-badge ${encomenda.itens.every(item => item.retirada) ? 'retirada-sim' : 'retirada-nao'}`}>
-                          {encomenda.itens.every(item => item.retirada) ? 'Sim' : 'Não'}
+                        <span className={`retirada-badge ${encomenda.retirada ? 'retirada-sim' : 'retirada-nao'}`}>
+                          {encomenda.retirada ? 'Sim' : 'Não'}
                         </span>
                       </td>
                       <td className="actions-cell">

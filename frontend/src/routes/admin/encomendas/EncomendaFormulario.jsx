@@ -75,6 +75,11 @@ export default () => {
       return;
     }
     
+    if (!dataEncomenda) {
+      alert('Existem campos não preenchidos. Preencha a data da encomenda.');
+      return;
+    }
+    
     try {
       // Criar uma encomenda para cada item
       for (const item of itensEncomenda) {
