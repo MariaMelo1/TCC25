@@ -30,7 +30,10 @@ class _InicialWidgetState extends State<InicialWidget> {
     super.initState();
     _model = createModel(context, () => InicialModel());
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _model.carregarProdutos();
+      safeSetState(() {});
+    });
   }
 
   @override
@@ -151,8 +154,14 @@ class _InicialWidgetState extends State<InicialWidget> {
                                                     children: [
                                                       Stack(
                                                         children: [
-                                                          SingleChildScrollView(
-                                                            child: Column(
+                                                          RefreshIndicator(
+                                                            onRefresh: () async {
+                                                              await _model.recarregarProdutos();
+                                                              safeSetState(() {});
+                                                            },
+                                                            color: Color(0xFF38B6FF),
+                                                            child: SingleChildScrollView(
+                                                              child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .max,
@@ -919,579 +928,156 @@ class _InicialWidgetState extends State<InicialWidget> {
                                                                           0.0,
                                                                           16.0,
                                                                           0.0),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    children: [
-                                                                      InkWell(
-                                                                        splashColor:
-                                                                            Colors.transparent,
-                                                                        focusColor:
-                                                                            Colors.transparent,
-                                                                        hoverColor:
-                                                                            Colors.transparent,
-                                                                        highlightColor:
-                                                                            Colors.transparent,
-                                                                        onTap:
-                                                                            () async {
-                                                                          context
-                                                                              .pushNamed(PratoJapaoWidget.routeName);
-                                                                        },
-                                                                        child:
-                                                                            Container(
-                                                                          width:
-                                                                              double.infinity,
-                                                                          height:
-                                                                              133.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondaryBackground,
-                                                                            boxShadow: [
-                                                                              BoxShadow(
-                                                                                blurRadius: 8.0,
-                                                                                color: FlutterFlowTheme.of(context).primaryText,
-                                                                                offset: Offset(
-                                                                                  0.0,
-                                                                                  2.0,
-                                                                                ),
-                                                                              )
-                                                                            ],
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(12.0),
+                                                                  child: _model.isLoading
+                                                                      ? Center(
+                                                                          child: CircularProgressIndicator(
+                                                                            color: Color(0xFF38B6FF),
                                                                           ),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                EdgeInsets.all(12.0),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              children: [
-                                                                                ClipRRect(
-                                                                                  borderRadius: BorderRadius.circular(8.0),
-                                                                                  child: Image.asset(
-                                                                                    'assets/images/gyudon.webp',
-                                                                                    width: 96.0,
-                                                                                    height: double.infinity,
-                                                                                    fit: BoxFit.cover,
-                                                                                  ),
-                                                                                ),
-                                                                                Expanded(
-                                                                                  child: Column(
-                                                                                    mainAxisSize: MainAxisSize.max,
-                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                    children: [
-                                                                                      Column(
-                                                                                        mainAxisSize: MainAxisSize.max,
-                                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                        children: [
-                                                                                          Row(
-                                                                                            mainAxisSize: MainAxisSize.max,
-                                                                                            children: [
-                                                                                              Text(
-                                                                                                'Gyudon',
-                                                                                                style: FlutterFlowTheme.of(context).titleMedium.override(
-                                                                                                      font: GoogleFonts.nunitoSans(
-                                                                                                        fontWeight: FontWeight.w600,
-                                                                                                        fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                                                                                                      ),
-                                                                                                      letterSpacing: 0.0,
-                                                                                                      fontWeight: FontWeight.w600,
-                                                                                                      fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                                                                                                    ),
-                                                                                              ),
-                                                                                            ],
-                                                                                          ),
-                                                                                          Padding(
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                            child: Text(
-                                                                                              'Arroz coberto por ovo cozido, cebolinha e\ncarne bovina refogada em molho.',
-                                                                                              style: FlutterFlowTheme.of(context).bodySmall.override(
-                                                                                                    font: GoogleFonts.nunitoSans(
-                                                                                                      fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                                                                                                      fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                                                                                                    ),
-                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                                                                                                    fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                                                                                                  ),
-                                                                                            ),
-                                                                                          ),
-                                                                                        ],
-                                                                                      ),
-                                                                                      Row(
-                                                                                        mainAxisSize: MainAxisSize.max,
-                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                        children: [
-                                                                                          Text(
-                                                                                            'R\$ 24,00',
-                                                                                            style: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                                  font: GoogleFonts.nunitoSans(
-                                                                                                    fontWeight: FontWeight.bold,
-                                                                                                    fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                  ),
-                                                                                                  color: FlutterFlowTheme.of(context).primary,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                ),
-                                                                                          ),
-                                                                                          FFButtonWidget(
-                                                                                            onPressed: () async {
-                                                                                              context.pushNamed(PratoJapaoWidget.routeName);
-                                                                                            },
-                                                                                            text: 'Ver',
-                                                                                            options: FFButtonOptions(
-                                                                                              height: 31.7,
-                                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                              color: Color(0xFF38B6FF),
-                                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                                    font: GoogleFonts.nunitoSans(
-                                                                                                      fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                                      fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                    ),
-                                                                                                    color: Colors.white,
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                                    fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                  ),
-                                                                                              elevation: 0.0,
-                                                                                              borderRadius: BorderRadius.circular(8.0),
-                                                                                            ),
-                                                                                          ),
-                                                                                        ],
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
-                                                                                ),
-                                                                              ].divide(SizedBox(width: 12.0)),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Container(
-                                                                        width: double
-                                                                            .infinity,
-                                                                        height:
-                                                                            133.0,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).secondaryBackground,
-                                                                          boxShadow: [
-                                                                            BoxShadow(
-                                                                              blurRadius: 8.0,
-                                                                              color: Colors.black,
-                                                                              offset: Offset(
-                                                                                0.0,
-                                                                                2.0,
+                                                                        )
+                                                                      : _model.produtos.isEmpty
+                                                                          ? Center(
+                                                                              child: Text(
+                                                                                'Nenhum produto encontrado',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium,
                                                                               ),
                                                                             )
-                                                                          ],
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(12.0),
-                                                                        ),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              EdgeInsets.all(12.0),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            children:
-                                                                                [
-                                                                              ClipRRect(
-                                                                                borderRadius: BorderRadius.circular(8.0),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/ravioli.jpg',
-                                                                                  width: 96.0,
-                                                                                  height: double.infinity,
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                              Expanded(
-                                                                                child: Column(
-                                                                                  mainAxisSize: MainAxisSize.max,
-                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                  children: [
-                                                                                    Column(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                      children: [
-                                                                                        Row(
-                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                          children: [
-                                                                                            Text(
-                                                                                              'Ravioli',
-                                                                                              style: FlutterFlowTheme.of(context).titleMedium.override(
-                                                                                                    font: GoogleFonts.nunitoSans(
-                                                                                                      fontWeight: FontWeight.w600,
-                                                                                                      fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                                                                                                    ),
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FontWeight.w600,
-                                                                                                    fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                                                                                                  ),
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
-                                                                                        Text(
-                                                                                          'Massa com formato de mini-pastéis \nrecheada de carne, ao molho de massa de \ntomate e manjericão.',
-                                                                                          style: FlutterFlowTheme.of(context).bodySmall.override(
-                                                                                                font: GoogleFonts.nunitoSans(
-                                                                                                  fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                                                                                                  fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                                                                                                ),
-                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                fontSize: 12.0,
-                                                                                                letterSpacing: 0.0,
-                                                                                                fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                                                                                                fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                                                                                              ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
-                                                                                    Row(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                      children: [
-                                                                                        Text(
-                                                                                          'R\$ 23,00',
-                                                                                          style: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                                font: GoogleFonts.nunitoSans(
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                ),
-                                                                                                color: FlutterFlowTheme.of(context).primary,
-                                                                                                letterSpacing: 0.0,
-                                                                                                fontWeight: FontWeight.bold,
-                                                                                                fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                              ),
-                                                                                        ),
-                                                                                        FFButtonWidget(
-                                                                                          onPressed: () {
-                                                                                            print('Button pressed ...');
-                                                                                          },
-                                                                                          text: 'Ver',
-                                                                                          options: FFButtonOptions(
-                                                                                            height: 31.7,
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                                                                                            iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                            color: Color(0xFF38B6FF),
-                                                                                            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                                  font: GoogleFonts.nunitoSans(
-                                                                                                    fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                                    fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                  ),
-                                                                                                  color: Colors.white,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                ),
-                                                                                            elevation: 0.0,
-                                                                                            borderRadius: BorderRadius.circular(8.0),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                            ].divide(SizedBox(width: 12.0)),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Container(
-                                                                        width: double
-                                                                            .infinity,
-                                                                        height:
-                                                                            133.0,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).secondaryBackground,
-                                                                          boxShadow: [
-                                                                            BoxShadow(
-                                                                              blurRadius: 8.0,
-                                                                              color: FlutterFlowTheme.of(context).primaryText,
-                                                                              offset: Offset(
-                                                                                0.0,
-                                                                                2.0,
-                                                                              ),
-                                                                            )
-                                                                          ],
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(12.0),
-                                                                        ),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              EdgeInsets.all(12.0),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            children:
-                                                                                [
-                                                                              ClipRRect(
-                                                                                borderRadius: BorderRadius.circular(8.0),
-                                                                                child: Image.asset(
-                                                                                  'assets/images/kasespatzle.jpg',
-                                                                                  width: 96.0,
-                                                                                  height: double.infinity,
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                              Expanded(
-                                                                                child: Column(
-                                                                                  mainAxisSize: MainAxisSize.max,
-                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                  children: [
-                                                                                    Column(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                      children: [
-                                                                                        Row(
-                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                          children: [
-                                                                                            Text(
-                                                                                              'Käsespätzle ',
-                                                                                              style: FlutterFlowTheme.of(context).titleMedium.override(
-                                                                                                    font: GoogleFonts.nunitoSans(
-                                                                                                      fontWeight: FontWeight.w600,
-                                                                                                      fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                                                                                                    ),
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FontWeight.w600,
-                                                                                                    fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                                                                                                  ),
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
-                                                                                        Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                          child: Text(
-                                                                                            'Massa rústica (Spatzle) ao molho de queijo (queijo Kase) e finaliza com cebola crispy.',
-                                                                                            style: FlutterFlowTheme.of(context).bodySmall.override(
-                                                                                                  font: GoogleFonts.nunitoSans(
-                                                                                                    fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                                                                                                    fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                                                                                                  ),
-                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                                                                                                  fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                                                                                                ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
-                                                                                    Row(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                      children: [
-                                                                                        Text(
-                                                                                          'R\$ 23,50',
-                                                                                          style: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                                font: GoogleFonts.nunitoSans(
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                ),
-                                                                                                color: FlutterFlowTheme.of(context).primary,
-                                                                                                letterSpacing: 0.0,
-                                                                                                fontWeight: FontWeight.bold,
-                                                                                                fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                              ),
-                                                                                        ),
-                                                                                        FFButtonWidget(
-                                                                                          onPressed: () {
-                                                                                            print('Button pressed ...');
-                                                                                          },
-                                                                                          text: 'Ver',
-                                                                                          options: FFButtonOptions(
-                                                                                            height: 31.7,
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                                                                                            iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                            color: Color(0xFF38B6FF),
-                                                                                            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                                  font: GoogleFonts.nunitoSans(
-                                                                                                    fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                                    fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                  ),
-                                                                                                  color: Colors.white,
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                ),
-                                                                                            elevation: 0.0,
-                                                                                            borderRadius: BorderRadius.circular(8.0),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                            ].divide(SizedBox(width: 12.0)),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Align(
-                                                                        alignment: AlignmentDirectional(
-                                                                            0.0,
-                                                                            1.0),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              100.0),
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                double.infinity,
-                                                                            height:
-                                                                                133.0,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                              boxShadow: [
-                                                                                BoxShadow(
-                                                                                  blurRadius: 8.0,
-                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  offset: Offset(
-                                                                                    0.0,
-                                                                                    2.0,
-                                                                                  ),
-                                                                                )
-                                                                              ],
-                                                                              borderRadius: BorderRadius.circular(12.0),
-                                                                            ),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: EdgeInsets.all(12.0),
-                                                                              child: Row(
+                                                                          : Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
+                                                                              child: Column(
                                                                                 mainAxisSize: MainAxisSize.max,
-                                                                                children: [
-                                                                                  ClipRRect(
-                                                                                    borderRadius: BorderRadius.circular(8.0),
-                                                                                    child: Image.asset(
-                                                                                      'assets/images/mac_ncheese.jpg',
-                                                                                      width: 96.0,
-                                                                                      height: double.infinity,
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
+                                                                                children: _model.produtos.map((produto) {
+                                                                                return Container(
+                                                                                  width: double.infinity,
+                                                                                  height: 133.0,
+                                                                                  margin: EdgeInsets.only(bottom: 16.0),
+                                                                                  decoration: BoxDecoration(
+                                                                                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                    boxShadow: [
+                                                                                      BoxShadow(
+                                                                                        blurRadius: 8.0,
+                                                                                        color: FlutterFlowTheme.of(context).primaryText,
+                                                                                        offset: Offset(0.0, 2.0),
+                                                                                      )
+                                                                                    ],
+                                                                                    borderRadius: BorderRadius.circular(12.0),
                                                                                   ),
-                                                                                  Expanded(
-                                                                                    child: Column(
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsets.all(12.0),
+                                                                                    child: Row(
                                                                                       mainAxisSize: MainAxisSize.max,
-                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                                                       children: [
-                                                                                        Column(
-                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                          children: [
-                                                                                            Row(
-                                                                                              mainAxisSize: MainAxisSize.max,
-                                                                                              children: [
-                                                                                                Text(
-                                                                                                  'Mac n\' Cheese',
-                                                                                                  style: FlutterFlowTheme.of(context).titleMedium.override(
-                                                                                                        font: GoogleFonts.nunitoSans(
+                                                                                        ClipRRect(
+                                                                                          borderRadius: BorderRadius.circular(8.0),
+                                                                                          child: Image.network(
+                                                                                            produto.imagemUrl,
+                                                                                            width: 96.0,
+                                                                                            height: double.infinity,
+                                                                                            fit: BoxFit.cover,
+                                                                                            errorBuilder: (context, error, stackTrace) {
+                                                                                              return Container(
+                                                                                                width: 96.0,
+                                                                                                height: double.infinity,
+                                                                                                color: Colors.grey[300],
+                                                                                                child: Icon(Icons.image_not_supported),
+                                                                                              );
+                                                                                            },
+                                                                                          ),
+                                                                                        ),
+                                                                                        Expanded(
+                                                                                          child: Column(
+                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                            children: [
+                                                                                              Column(
+                                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  Text(
+                                                                                                    produto.nome,
+                                                                                                    style: FlutterFlowTheme.of(context).titleMedium.override(
+                                                                                                          font: GoogleFonts.nunitoSans(
+                                                                                                            fontWeight: FontWeight.w600,
+                                                                                                            fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
+                                                                                                          ),
+                                                                                                          letterSpacing: 0.0,
                                                                                                           fontWeight: FontWeight.w600,
                                                                                                           fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
                                                                                                         ),
-                                                                                                        letterSpacing: 0.0,
-                                                                                                        fontWeight: FontWeight.w600,
-                                                                                                        fontStyle: FlutterFlowTheme.of(context).titleMedium.fontStyle,
-                                                                                                      ),
-                                                                                                ),
-                                                                                              ],
-                                                                                            ),
-                                                                                            Padding(
-                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                              child: Text(
-                                                                                                'Macarrão-cotovelo com molho à base de \nqueijo cheddar, temperado com páprica e \nmostarda .',
-                                                                                                style: FlutterFlowTheme.of(context).bodySmall.override(
-                                                                                                      font: GoogleFonts.nunitoSans(
-                                                                                                        fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                                                                                                        fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                                                                                                      ),
-                                                                                                      color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                      letterSpacing: 0.0,
-                                                                                                      fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
-                                                                                                      fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
-                                                                                                    ),
-                                                                                              ),
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
-                                                                                        Row(
-                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                          children: [
-                                                                                            Text(
-                                                                                              'R\$ 23,50',
-                                                                                              style: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                                    font: GoogleFonts.nunitoSans(
-                                                                                                      fontWeight: FontWeight.bold,
-                                                                                                      fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                    ),
-                                                                                                    color: FlutterFlowTheme.of(context).primary,
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FontWeight.bold,
-                                                                                                    fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                                                   ),
-                                                                                            ),
-                                                                                            FFButtonWidget(
-                                                                                              onPressed: () {
-                                                                                                print('Button pressed ...');
-                                                                                              },
-                                                                                              text: 'Ver',
-                                                                                              options: FFButtonOptions(
-                                                                                                height: 31.7,
-                                                                                                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                                                                                                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                                color: Color(0xFF38B6FF),
-                                                                                                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                                      font: GoogleFonts.nunitoSans(
-                                                                                                        fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                                        fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                                      ),
-                                                                                                      color: Colors.white,
-                                                                                                      letterSpacing: 0.0,
-                                                                                                      fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                                      fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                                  Padding(
+                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                                    child: Text(
+                                                                                                      produto.descricao.length > 80
+                                                                                                          ? '${produto.descricao.substring(0, 80)}...'
+                                                                                                          : produto.descricao,
+                                                                                                      style: FlutterFlowTheme.of(context).bodySmall.override(
+                                                                                                            font: GoogleFonts.nunitoSans(
+                                                                                                              fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                                                                                                              fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                                                                                                            ),
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                            letterSpacing: 0.0,
+                                                                                                            fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                                                                                                            fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                                                                                                          ),
                                                                                                     ),
-                                                                                                elevation: 0.0,
-                                                                                                borderRadius: BorderRadius.circular(8.0),
+                                                                                                  ),
+                                                                                                ],
                                                                                               ),
-                                                                                            ),
-                                                                                          ],
+                                                                                              Row(
+                                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                children: [
+                                                                                                  Text(
+                                                                                                    'R\$ ${produto.preco.toStringAsFixed(2).replaceAll('.', ',')}',
+                                                                                                    style: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                                          font: GoogleFonts.nunitoSans(
+                                                                                                            fontWeight: FontWeight.bold,
+                                                                                                            fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                                          ),
+                                                                                                          color: FlutterFlowTheme.of(context).primary,
+                                                                                                          letterSpacing: 0.0,
+                                                                                                          fontWeight: FontWeight.bold,
+                                                                                                          fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                                        ),
+                                                                                                  ),
+                                                                                                  FFButtonWidget(
+                                                                                                    onPressed: () {
+                                                                                                      print('Ver produto: ${produto.nome}');
+                                                                                                    },
+                                                                                                    text: 'Ver',
+                                                                                                    options: FFButtonOptions(
+                                                                                                      height: 31.7,
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                                                                                      iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                                      color: Color(0xFF38B6FF),
+                                                                                                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                                            font: GoogleFonts.nunitoSans(
+                                                                                                              fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                                              fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                                            ),
+                                                                                                            color: Colors.white,
+                                                                                                            letterSpacing: 0.0,
+                                                                                                            fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                                            fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                                          ),
+                                                                                                      elevation: 0.0,
+                                                                                                      borderRadius: BorderRadius.circular(8.0),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ],
+                                                                                          ),
                                                                                         ),
-                                                                                      ],
+                                                                                      ].divide(SizedBox(width: 12.0)),
                                                                                     ),
                                                                                   ),
-                                                                                ].divide(SizedBox(width: 12.0)),
+                                                                                );
+                                                                                }).toList(),
                                                                               ),
                                                                             ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ].divide(SizedBox(
-                                                                        height:
-                                                                            16.0)),
-                                                                  ),
                                                                 ),
                                                               ]
                                                                   .divide(SizedBox(
@@ -1501,6 +1087,7 @@ class _InicialWidgetState extends State<InicialWidget> {
                                                                       SizedBox(
                                                                           height:
                                                                               16.0)),
+                                                              ),
                                                             ),
                                                           ),
                                                         ],

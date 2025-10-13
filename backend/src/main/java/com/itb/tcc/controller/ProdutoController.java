@@ -76,7 +76,7 @@ public class ProdutoController extends ControllerBase<Produto, ProdutoRepository
     public Produto[] experimenteProdutos() {
 
         List<Produto> todosProdutos = repository.findAllByStatus(Status.ATIVO.getValor());
-        Produto[] produtos = new Produto[todosProdutos.size() > 3 ? 3 : todosProdutos.size()];
+        Produto[] produtos = new Produto[todosProdutos.size() > 5 ? 5 : todosProdutos.size()];
         for (int i = 0; i < produtos.length; i++) {
             int escolhido = new Random().nextInt(todosProdutos.size());
             produtos[i] = todosProdutos.get(escolhido);

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../models/produto.dart';
 
 class ApiService {
   static const String baseUrl = 'http://localhost:8080';
@@ -78,5 +79,19 @@ class ApiService {
     };
     
     return await post('usuarios/login', loginData);
+  }
+
+  // Buscar produtos aleatórios (máximo 5)
+  static Future<List<Produto>> getProdutosAleatorios() async {
+    try {
+      final response = await get('produtos/home/experimente');
+      if (response['success']) {
+        final List<dynamic> data = response['data'];
+        return data.map((json) => Produto.fromJson(json)).toList();
+      }
+      return [];
+    } catch (e) {
+      return [];
+    }
   }
 }
