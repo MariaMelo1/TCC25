@@ -1062,33 +1062,25 @@ class _CadastroLoginWidgetState extends State<CadastroLoginWidget>
                                                       child: FFButtonWidget(
                                                         onPressed: () async {
                                                           try {
-                                                            // Tentar cadastrar
                                                             final resultado = await _model.cadastrarUsuario();
                                                             
                                                             if (resultado['success'] == true) {
                                                               ScaffoldMessenger.of(context).showSnackBar(
                                                                 SnackBar(
-                                                                  content: Text('Conta criada com sucesso!'),
+                                                                  content: Text('Conta criada com sucesso! Faça seu login.'),
                                                                   backgroundColor: Colors.green,
                                                                 ),
                                                               );
-                                                              
-                                                              // Navegar para tela inicial
-                                                              context.pushNamed(InicialWidget.routeName);
+                                                              // Mudar para aba de Login
+                                                              _model.tabBarController?.animateTo(1);
                                                             } else {
                                                               ScaffoldMessenger.of(context).showSnackBar(
-                                                                SnackBar(
-                                                                  content: Text('Erro: ${resultado['error']}'),
-                                                                  backgroundColor: Colors.red,
-                                                                ),
+                                                                SnackBar(content: Text('Erro: ${resultado['error'] ?? 'Erro desconhecido'}')),
                                                               );
                                                             }
                                                           } catch (e) {
                                                             ScaffoldMessenger.of(context).showSnackBar(
-                                                              SnackBar(
-                                                                content: Text('Erro: $e'),
-                                                                backgroundColor: Colors.red,
-                                                              ),
+                                                              SnackBar(content: Text('Erro: $e')),
                                                             );
                                                           }
                                                         },

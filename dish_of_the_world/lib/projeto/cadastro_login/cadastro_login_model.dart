@@ -223,19 +223,61 @@ class CadastroLoginModel extends FlutterFlowModel<CadastroLoginWidget> {
     return null;
   }
 
+  // Validar todos os campos obrigatórios
+  bool validarFormulario() {
+    final nome = emailAddressCreateTextController1?.text?.trim() ?? '';
+    final email = emailAddressCreateTextController2?.text?.trim() ?? '';
+    final cpf = emailAddressCreateTextController3?.text?.trim() ?? '';
+    final telefone = emailAddressCreateTextController4?.text?.trim() ?? '';
+    final senha = passwordCreateTextController1?.text?.trim() ?? '';
+    final confirmSenha = passwordCreateTextController2?.text?.trim() ?? '';
+    
+    print('Debug - Nome: "$nome"');
+    print('Debug - Email: "$email"');
+    print('Debug - CPF: "$cpf"');
+    print('Debug - Telefone: "$telefone"');
+    print('Debug - Senha: "$senha"');
+    print('Debug - Confirm: "$confirmSenha"');
+    
+    // Verificar se todos os campos estão preenchidos
+    if (nome.isEmpty) { print('Nome vazio'); return false; }
+    if (email.isEmpty) { print('Email vazio'); return false; }
+    if (cpf.isEmpty) { print('CPF vazio'); return false; }
+    if (telefone.isEmpty) { print('Telefone vazio'); return false; }
+    if (senha.isEmpty) { print('Senha vazia'); return false; }
+    if (confirmSenha.isEmpty) { print('Confirmação vazia'); return false; }
+    
+    print('Todos os campos preenchidos - validação OK');
+    return true;
+  }
+
   // Método para cadastrar usuário
   Future<Map<String, dynamic>> cadastrarUsuario() async {
-    final nome = emailAddressCreateTextController1?.text ?? '';
-    final email = emailAddressCreateTextController2?.text ?? '';
-    final cpf = emailAddressCreateTextController3?.text ?? '';
-    final telefone = emailAddressCreateTextController4?.text ?? '';
-    final senha = passwordCreateTextController1?.text ?? '';
+    final nome = emailAddressCreateTextController1?.text?.trim() ?? '';
+    final email = emailAddressCreateTextController2?.text?.trim() ?? '';
+    final cpf = emailAddressCreateTextController3?.text?.trim() ?? '';
+    final telefone = emailAddressCreateTextController4?.text?.trim() ?? '';
+    final senha = passwordCreateTextController1?.text?.trim() ?? '';
+    final confirmSenha = passwordCreateTextController2?.text?.trim() ?? '';
+    
+    // Validação básica
+    if (nome.isEmpty || email.isEmpty || cpf.isEmpty || telefone.isEmpty || senha.isEmpty) {
+      return {'success': false, 'error': 'Preencha todos os campos'};
+    }
+    
+    if (senha != confirmSenha) {
+      return {'success': false, 'error': 'Senhas não coincidem'};
+    }
+    
+    // Remover formatação do CPF e telefone
+    final cpfLimpo = cpf.replaceAll(RegExp(r'[^0-9]'), '');
+    final telefoneLimpo = telefone.replaceAll(RegExp(r'[^0-9]'), '');
     
     return await ApiService.cadastrarUsuario(
       nome: nome,
       email: email,
-      cpf: cpf,
-      telefone: telefone,
+      cpf: cpfLimpo,
+      telefone: telefoneLimpo,
       senha: senha,
     );
   }

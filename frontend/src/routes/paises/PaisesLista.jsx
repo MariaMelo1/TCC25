@@ -8,6 +8,8 @@ import "./PaisesLista.css";
 
 export default () => {
   const [paises, setPaises] = useState([]);
+  const [paisesFiltrados, setPaisesFiltrados] = useState([]);
+  const [termoPesquisa, setTermoPesquisa] = useState("");
   const [loading, setLoading] = useState(true);
 
   async function obterPaises() {
@@ -16,6 +18,7 @@ export default () => {
         BackendEndPoints.paises.listarParaCliente
       );
       setPaises(resposta.dados);
+      setPaisesFiltrados(resposta.dados);
     } catch (error) {
       console.error('Erro ao carregar países:', error);
     } finally {
@@ -26,6 +29,13 @@ export default () => {
   useEffect(() => {
     obterPaises();
   }, []);
+
+  useEffect(() => {
+    const filtrados = paises.filter(pais => 
+      pais.nome.toLowerCase().includes(termoPesquisa.toLowerCase())
+    );
+    setPaisesFiltrados(filtrados);
+  }, [termoPesquisa, paises]);
 
   if (loading) {
     return (
@@ -48,13 +58,29 @@ export default () => {
         <div className="paises-header">
           <h1>Explore Países</h1>
           <p>Descubra as deliciosas culinárias de diferentes países ao redor do mundo</p>
+          
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Pesquisar países..."
+              value={termoPesquisa}
+              onChange={(e) => setTermoPesquisa(e.target.value)}
+              className="search-input"
+            />
+          </div>
         </div>
         
         <div className="paises-grid">
-          {paises.map((pais) => (
+          {paisesFiltrados.map((pais) => (
             <Pais key={pais.id} {...pais} />
           ))}
         </div>
+        
+        {paisesFiltrados.length === 0 && termoPesquisa && (
+          <div className="no-results">
+            <p>Nenhum país encontrado para "{termoPesquisa}"</p>
+          </div>
+        )}
       </div>
       
       <Rodape />

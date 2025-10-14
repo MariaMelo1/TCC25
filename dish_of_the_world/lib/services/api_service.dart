@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/produto.dart';
+import '../models/pais.dart';
 
 class ApiService {
   static const String baseUrl = 'http://localhost:8080';
@@ -65,7 +66,10 @@ class ApiService {
       'nivelAcesso': 'CLIENTE',
     };
     
-    return await post('usuarios', userData);
+    print('Enviando dados: $userData');
+    final result = await post('usuarios/salvar', userData);
+    print('Resposta: $result');
+    return result;
   }
 
   // Login usuário
@@ -88,6 +92,20 @@ class ApiService {
       if (response['success']) {
         final List<dynamic> data = response['data'];
         return data.map((json) => Produto.fromJson(json)).toList();
+      }
+      return [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  // Buscar todos os países ativos
+  static Future<List<Pais>> getPaises() async {
+    try {
+      final response = await get('paises/listar/cliente');
+      if (response['success']) {
+        final List<dynamic> data = response['data'];
+        return data.map((json) => Pais.fromJson(json)).toList();
       }
       return [];
     } catch (e) {
