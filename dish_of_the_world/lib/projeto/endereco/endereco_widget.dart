@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'endereco_model.dart';
 export 'endereco_model.dart';
 
@@ -238,9 +239,8 @@ class _EnderecoWidgetState extends State<EnderecoWidget> {
                                                                 ),
                                                                 FFButtonWidget(
                                                                   onPressed:
-                                                                      () {
-                                                                    print(
-                                                                        'Button pressed ...');
+                                                                      () async {
+                                                                    await launchUrl(Uri.parse('https://maps.app.goo.gl/az5DMWQyCLNrieRj9'));
                                                                   },
                                                                   text:
                                                                       'Ver no mapa',

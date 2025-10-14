@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
+import '/services/user_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -29,16 +30,15 @@ class _PerfilPageWidgetState extends State<PerfilPageWidget>
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = <String, AnimationInfo>{};
+  
+  String userName = 'Usuário';
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => PerfilPageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      context.pushNamed(MinhasEncomendasWidget.routeName);
-    });
+    
+    _loadUserName();
 
     animationsMap.addAll({
       'buttonOnPageLoadAnimation': AnimationInfo(
@@ -71,6 +71,15 @@ class _PerfilPageWidgetState extends State<PerfilPageWidget>
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
+  
+  Future<void> _loadUserName() async {
+    final name = await UserService.getUserName();
+    if (name != null && mounted) {
+      setState(() {
+        userName = name;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -102,47 +111,7 @@ class _PerfilPageWidgetState extends State<PerfilPageWidget>
                       height: 217.5,
                       child: Stack(
                         children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1.0, 1.0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 0.0, 16.0),
-                              child: Container(
-                                width: 90.0,
-                                height: 90.0,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF206389),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Color(0xFF33B6FF),
-                                    width: 2.0,
-                                  ),
-                                ),
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.0, -1.0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        4.0, 4.0, 4.0, 4.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(50.0),
-                                      child: CachedNetworkImage(
-                                        fadeInDuration:
-                                            Duration(milliseconds: 500),
-                                        fadeOutDuration:
-                                            Duration(milliseconds: 500),
-                                        imageUrl:
-                                            'https://images.unsplash.com/photo-1711845394209-60aff0e51336?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw4fHxtdWxoZXIlMjBldXJvcGVpYXxlbnwwfHx8fDE3NDkwMzI3MTl8MA&ixlib=rb-4.1.0&q=80&w=1080',
-                                        width: 100.0,
-                                        height: 100.0,
-                                        fit: BoxFit.cover,
-                                        alignment: Alignment(0.0, 0.0),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+
                           Align(
                             alignment: AlignmentDirectional(-0.98, -0.51),
                             child: FlutterFlowIconButton(
@@ -197,9 +166,9 @@ class _PerfilPageWidgetState extends State<PerfilPageWidget>
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.62, 0.65),
+                            alignment: AlignmentDirectional(0.0, 0.65),
                             child: Text(
-                              'Ana Machado Costa',
+                              userName,
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context)
                                   .headlineLarge
