@@ -1,8 +1,10 @@
 package com.itb.tcc.controller;
 
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,9 @@ import com.itb.tcc.repository.UsuarioRepository;
 @RequestMapping("/usuarios/")
 @CrossOrigin(value = "*")
 public class UsuarioController extends ControllerBase<Usuario, UsuarioRepository> {
+    
+
+    
     UsuarioController(UsuarioRepository repository) {
         super(repository);
     }
@@ -37,4 +42,8 @@ public class UsuarioController extends ControllerBase<Usuario, UsuarioRepository
 
         return usuarioEncontrado.orElseThrow();
     }
+    
+
+    
+
 }

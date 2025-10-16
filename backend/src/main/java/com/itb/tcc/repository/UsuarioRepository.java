@@ -10,4 +10,5 @@ import com.itb.tcc.entity.Usuario;
 @Repository
 public interface UsuarioRepository extends RepositoryBase<Usuario> {
     Optional<Usuario> findByEmailAndSenha(String email, String senha);
+    Optional<Usuario> findByEmail(String email);
 }

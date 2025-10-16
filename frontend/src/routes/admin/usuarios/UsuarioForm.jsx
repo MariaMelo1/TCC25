@@ -12,6 +12,7 @@ export default () => {
     status: -1,
     cpf: "",
     telefone: "",
+    dataNascimento: "",
     nivelAcesso: "",
     senha: "",
   });
@@ -37,6 +38,12 @@ export default () => {
             id="telefone"
             label="Telefone"
             maxLength={13}
+          />
+          <CampoEntrada
+            controller={controllers.dataNascimento}
+            id="dataNascimento"
+            label="Data de Nascimento"
+            placeholder="DD/MM/AAAA"
           />
           <CampoEntrada
             controller={controllers.senha}

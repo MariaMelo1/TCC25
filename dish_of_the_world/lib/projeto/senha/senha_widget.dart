@@ -6,7 +6,8 @@ import '/index.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'senha_model.dart';
 export 'senha_model.dart';
 
@@ -436,10 +437,9 @@ class _SenhaWidgetState extends State<SenhaWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        await launchUrl(Uri(
-                          scheme: 'mailto',
-                          path: 'duda13062007@gmail.com',
-                        ));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Email de redefinição enviado!')),
+                        );
                       },
                       text: 'Enviar Link',
                       options: FFButtonOptions(

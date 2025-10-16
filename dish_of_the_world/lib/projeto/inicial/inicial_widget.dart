@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
+import '/projeto/produto_detalhes/produto_detalhes_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -1044,7 +1045,12 @@ class _InicialWidgetState extends State<InicialWidget> {
                                                                                                   ),
                                                                                                   FFButtonWidget(
                                                                                                     onPressed: () {
-                                                                                                      print('Ver produto: ${produto.nome}');
+                                                                                                      Navigator.push(
+                                                                                                        context,
+                                                                                                        MaterialPageRoute(
+                                                                                                          builder: (context) => ProdutoDetalhesWidget(produto: produto),
+                                                                                                        ),
+                                                                                                      );
                                                                                                     },
                                                                                                     text: 'Ver',
                                                                                                     options: FFButtonOptions(

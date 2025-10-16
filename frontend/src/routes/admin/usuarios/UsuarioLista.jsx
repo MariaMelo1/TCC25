@@ -46,6 +46,7 @@ export default () => {
     usuario.email?.toLowerCase().includes(consulta.toLowerCase()) ||
     usuario.cpf?.includes(consulta) ||
     usuario.telefone?.includes(consulta) ||
+    usuario.dataNascimento?.includes(consulta) ||
     String(usuario.id).includes(consulta) ||
     usuario.nivelAcesso?.toLowerCase().includes(consulta.toLowerCase())
   );
@@ -100,6 +101,7 @@ export default () => {
                   <th>Email</th>
                   <th>CPF</th>
                   <th>Telefone</th>
+                  <th>Data Nascimento</th>
                   <th>Nível</th>
                   <th>Status</th>
                   <th>Ações</th>
@@ -124,6 +126,11 @@ export default () => {
                       <td className="telefone-cell">
                         <span className="telefone-formatado">
                           {usuario.telefone?.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3') || 'N/A'}
+                        </span>
+                      </td>
+                      <td className="data-nascimento-cell">
+                        <span className="data-nascimento">
+                          {usuario.dataNascimento || 'N/A'}
                         </span>
                       </td>
                       <td className="nivel-cell">
@@ -158,7 +165,7 @@ export default () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="8" className="no-data">
+                    <td colSpan="9" className="no-data">
                       {consulta ? "Nenhum usuário encontrado" : "Nenhum usuário cadastrado"}
                     </td>
                   </tr>

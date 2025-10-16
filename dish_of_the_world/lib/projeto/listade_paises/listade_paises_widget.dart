@@ -658,66 +658,84 @@ class _ListadePaisesWidgetState extends State<ListadePaisesWidget> {
       },
       child: Container(
         width: double.infinity,
+        height: 120.0,
+        margin: EdgeInsets.only(bottom: 8.0),
         decoration: BoxDecoration(
-          color: Color(0xFFE3E3E3),
-          borderRadius: BorderRadius.circular(12.0),
+          gradient: LinearGradient(
+            colors: [Color(0xFF38B6FF), Color(0xFF206389)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(20.0),
         ),
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: imagemWidget,
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Row(
+                children: [
+                  Container(
+                    width: 70.0,
+                    height: 70.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15.0),
+                      border: Border.all(color: Colors.white, width: 3.0),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: imagemWidget,
+                    ),
+                  ),
+                  SizedBox(width: 16.0),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           pais.nome,
-                          style: FlutterFlowTheme.of(context)
-                              .titleMedium
-                              .override(
+                          style: FlutterFlowTheme.of(context).titleLarge.override(
                                 font: GoogleFonts.nunitoSans(
-                                  fontWeight: FontWeight.w600,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleMedium
-                                      .fontStyle,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                color: Color(0xFF38B6FF),
+                                color: Colors.white,
                                 letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .fontStyle,
                               ),
                         ),
+                        SizedBox(height: 4.0),
+                        Text(
+                          'Explore os sabores',
+                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                font: GoogleFonts.nunitoSans(),
+                                color: Colors.white.withOpacity(0.8),
+                                letterSpacing: 0.0,
+                              ),
+                        ),
+                        SizedBox(height: 8.0),
                         Row(
-                          children: List.generate(5, (index) => 
-                            Icon(
-                              Icons.star,
-                              size: 16.0,
-                              color: FlutterFlowTheme.of(context).primary,
+                          children: [
+                            Icon(Icons.star, color: Color(0xFFFBE405), size: 16.0),
+                            SizedBox(width: 4.0),
+                            Text(
+                              '${(4.7 + (pais.id % 4) * 0.1).toStringAsFixed(1)}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14.0,
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       ],
                     ),
-
-
-                  ],
-                ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                    size: 20.0,
+                  ),
+                ],
               ),
-            ].divide(SizedBox(width: 12.0)),
-          ),
-        ),
+            ),
       ),
     );
   }

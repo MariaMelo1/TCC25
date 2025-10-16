@@ -96,7 +96,7 @@ class CadastroLoginModel extends FlutterFlowModel<CadastroLoginWidget> {
     emailAddressCreateTextController2Validator = _validarEmail;
     emailAddressCreateTextController3Validator = _validarCPF;
     emailAddressCreateTextController4Validator = _validarTelefone;
-    emailAddressCreateTextController5Validator = null;
+    emailAddressCreateTextController5Validator = _validarDataNascimento;
     emailAddressCreateTextController6Validator = null;
     passwordCreateTextController1Validator = _validarSenha;
     passwordCreateTextController2Validator = _validarConfirmacaoSenha;
@@ -229,25 +229,19 @@ class CadastroLoginModel extends FlutterFlowModel<CadastroLoginWidget> {
     final email = emailAddressCreateTextController2?.text?.trim() ?? '';
     final cpf = emailAddressCreateTextController3?.text?.trim() ?? '';
     final telefone = emailAddressCreateTextController4?.text?.trim() ?? '';
+    final dataNascimento = emailAddressCreateTextController5?.text?.trim() ?? '';
     final senha = passwordCreateTextController1?.text?.trim() ?? '';
     final confirmSenha = passwordCreateTextController2?.text?.trim() ?? '';
     
-    print('Debug - Nome: "$nome"');
-    print('Debug - Email: "$email"');
-    print('Debug - CPF: "$cpf"');
-    print('Debug - Telefone: "$telefone"');
-    print('Debug - Senha: "$senha"');
-    print('Debug - Confirm: "$confirmSenha"');
-    
     // Verificar se todos os campos estão preenchidos
-    if (nome.isEmpty) { print('Nome vazio'); return false; }
-    if (email.isEmpty) { print('Email vazio'); return false; }
-    if (cpf.isEmpty) { print('CPF vazio'); return false; }
-    if (telefone.isEmpty) { print('Telefone vazio'); return false; }
-    if (senha.isEmpty) { print('Senha vazia'); return false; }
-    if (confirmSenha.isEmpty) { print('Confirmação vazia'); return false; }
+    if (nome.isEmpty) return false;
+    if (email.isEmpty) return false;
+    if (cpf.isEmpty) return false;
+    if (telefone.isEmpty) return false;
+    if (dataNascimento.isEmpty) return false;
+    if (senha.isEmpty) return false;
+    if (confirmSenha.isEmpty) return false;
     
-    print('Todos os campos preenchidos - validação OK');
     return true;
   }
 
@@ -257,11 +251,12 @@ class CadastroLoginModel extends FlutterFlowModel<CadastroLoginWidget> {
     final email = emailAddressCreateTextController2?.text?.trim() ?? '';
     final cpf = emailAddressCreateTextController3?.text?.trim() ?? '';
     final telefone = emailAddressCreateTextController4?.text?.trim() ?? '';
+    final dataNascimento = emailAddressCreateTextController5?.text?.trim() ?? '';
     final senha = passwordCreateTextController1?.text?.trim() ?? '';
     final confirmSenha = passwordCreateTextController2?.text?.trim() ?? '';
     
     // Validação básica
-    if (nome.isEmpty || email.isEmpty || cpf.isEmpty || telefone.isEmpty || senha.isEmpty) {
+    if (nome.isEmpty || email.isEmpty || cpf.isEmpty || telefone.isEmpty || dataNascimento.isEmpty || senha.isEmpty) {
       return {'success': false, 'error': 'Preencha todos os campos'};
     }
     
@@ -278,6 +273,7 @@ class CadastroLoginModel extends FlutterFlowModel<CadastroLoginWidget> {
       email: email,
       cpf: cpfLimpo,
       telefone: telefoneLimpo,
+      dataNascimento: dataNascimento,
       senha: senha,
     );
   }

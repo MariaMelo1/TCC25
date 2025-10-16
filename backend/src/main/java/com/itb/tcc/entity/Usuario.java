@@ -19,6 +19,7 @@ public class Usuario extends EntityBase {
     private String nivelAcesso;
     private String senha;
 
+
     public String getCpf() {
         return cpf;
     }
@@ -70,5 +71,7 @@ public class Usuario extends EntityBase {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+
 
 }

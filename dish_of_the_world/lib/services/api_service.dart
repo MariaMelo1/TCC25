@@ -55,6 +55,7 @@ class ApiService {
     required String email,
     required String cpf,
     required String telefone,
+    required String dataNascimento,
     required String senha,
   }) async {
     final userData = {
@@ -62,6 +63,7 @@ class ApiService {
       'email': email,
       'cpf': cpf,
       'telefone': telefone,
+      'dataNascimento': dataNascimento,
       'senha': senha,
       'nivelAcesso': 'CLIENTE',
     };
